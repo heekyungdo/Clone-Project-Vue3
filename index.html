@@ -19,9 +19,14 @@
           </div>
           <div class="product-info">
             <h1>{{ product }}</h1>
-            <!-- solution -->
-            <a :href="url">Made by Vue Mastery</a>
-            <!-- solution -->
+            <!-- if in stock is true, show the first P tag -->
+            <!-- Otherwise or v-else, show the second P tag -->
+            <!-- Don't need to pair it with v-else -->
+            <!-- Don't need a fallback element wth v-else beneath it. -->
+            <p v-if="inStock">In Stock</p>
+            <p v-else>Out of Stock</p>
+            <!-- when v-show returns true, it displays on the screen, when v-show returns false, it displays none. it's just like display:none and on (toggling off) -->
+            <!-- <p v-show="inStock">In Stock</p> -->
           </div>
         </div>
       </div>
