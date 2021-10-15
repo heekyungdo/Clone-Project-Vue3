@@ -5,6 +5,7 @@ app.component("product-display", {
             required:true
         }
     }
+    
   template:
     /*html*/
     `<div class="product-display">
@@ -29,7 +30,7 @@ app.component("product-display", {
         <!-- Don't need a fallback element wth v-else beneath it. -->
         <p v-if="inStock">In Stock</p>
         <p v-else>Out of Stock</p>
-<p>Shipping:{{shipping}}</p>
+        <p>Shipping:{{shipping}}</p>
         
         <!-- if inventory is greater than 10, show the In Stock -->
         <!-- <p v-if="inventory>10">In Stock</p> -->
@@ -91,9 +92,9 @@ app.component("product-display", {
         </button>
 
         <!-- solution -->
-        <!-- <button class="button" v-on:click="removeFromCart">
+       <button class="button" v-on:click="removeFromCart">
           Remove Item
-        </button> -->
+        </button>
         <!-- solution -->
       </div>
     </div>
@@ -138,7 +139,10 @@ app.component("product-display", {
   },
   methods: {
     addToCart() {
-      this.cart += 1;
+    //   this.cart += 1;
+    // this is how the other parts know that event happens.
+    // we're emitting or bubbling up that event (go to html)
+    this.$emit("add-to-cart", this.variants[this.selectedVariant].id)
     },
     updateVariant(index) {
       // bring this path -> image: "./assets/images/socks_green.jpg"
@@ -147,11 +151,11 @@ app.component("product-display", {
     },
 
     // solution
-    // removeFromCart() {
-    //   if (this.cart >= 1) {
-    //     this.cart -= 1;
-    //   }
-    // },
+    removeFromCart() {
+    
+        this.$emit("remove-from-cart", this.variants[this.selectedVariant].id)
+      
+    },
     // solution
   },
   computed: {
