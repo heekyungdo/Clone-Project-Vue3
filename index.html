@@ -24,7 +24,12 @@
             <!-- solution -->
           </div>
           <div class="product-info">
-            <h1>{{ product }}</h1>
+            <h1>{{ title }}</h1>
+
+            <!-- solution -->
+            <p v-if="onSale">{{secondTitle}}</p>
+            <!-- solution -->
+
             <!-- if in stock is true, show the first P tag -->
             <!-- Otherwise or v-else, show the second P tag -->
             <!-- Don't need to pair it with v-else -->
@@ -63,10 +68,11 @@
             <!-- v-bind:key -> This gives each DOM element a unique key so that Vue can essentially grasp onto the element and not lose track of it as things update and change within your app.-->
             <!-- This provides you some performance improvements and also later down the line-->
             <!-- if you're doing something like animating your elements, you'll find that the key attribute is really helpful with things like that-->
+            <!-- To get access to the index we'll pass it in as a second parameter in our v=for-->
             <div
-              v-for="variant in variants"
+              v-for="(variant, index) in variants"
               :key="variant.id"
-              @mouseover="updateImage(variant.image)"
+              @mouseover="updateVariant(index)"
               class="color-circle"
               :style="{ backgroundColor: variant.color }"
             >

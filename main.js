@@ -3,12 +3,16 @@ const app = Vue.createApp({
     return {
       cart: 0,
       product: "Socks",
-      image: "./assets/images/socks_green.jpg",
+      brand: "Vue Mastery",
+      onSale: true,
+      // we're gonna update this with the index of the variant that's currently hovered on
+      selectedVariant: 0,
+      // image: "./assets/images/socks_green.jpg",
       //   solution
       //   url: "https://github.com/heekyungdo",
       //   solution
 
-      inStock: true,
+      // inStock: true,
       // inventory: 1,
 
       //   solution
@@ -18,8 +22,18 @@ const app = Vue.createApp({
       details: ["50% cotton", "30% wool", "20% polyester"],
       //   sizes: ["S", "M", "L", "XL"],
       variants: [
-        { id: 2234, color: "green", image: "./assets/images/socks_green.jpg" },
-        { id: 2235, color: "blue", image: "./assets/images/socks_blue.jpg" },
+        {
+          id: 2234,
+          color: "green",
+          image: "./assets/images/socks_green.jpg",
+          quantity: 50,
+        },
+        {
+          id: 2235,
+          color: "blue",
+          image: "./assets/images/socks_blue.jpg",
+          quantity: 0,
+        },
       ],
     };
   },
@@ -27,9 +41,10 @@ const app = Vue.createApp({
     addToCart() {
       this.cart += 1;
     },
-    updateImage(variantImage) {
+    updateVariant(index) {
       // bring this path -> image: "./assets/images/socks_green.jpg"
-      this.image = variantImage;
+      this.selectedVariant = index;
+      // console.log(index);
     },
 
     // solution
@@ -38,6 +53,27 @@ const app = Vue.createApp({
     //     this.cart -= 1;
     //   }
     // },
+    // solution
+  },
+  computed: {
+    title() {
+      return this.brand + " " + this.product;
+    },
+    image() {
+      // zero targets the first one in variants
+      // one targets the seond one in variants
+      return this.variants[this.selectedVariant].image;
+    },
+    inStock() {
+      return this.variants[this.selectedVariant].quantity;
+    },
+
+    // solution
+    secondTitle() {
+      if (this.onSale) {
+        return this.brand + " " + this.product + " " + "is on sale.";
+      }
+    },
     // solution
   },
 });
