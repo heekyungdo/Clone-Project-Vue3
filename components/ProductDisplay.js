@@ -1,11 +1,10 @@
 app.component("product-display", {
-    props: {
-        premium: {
-            type:Boolean,
-            required:true
-        }
-    }
-    
+  props: {
+    premium: {
+      type: Boolean,
+      required: true,
+    },
+  },
   template:
     /*html*/
     `<div class="product-display">
@@ -98,7 +97,10 @@ app.component("product-display", {
         <!-- solution -->
       </div>
     </div>
+    <review-list v-if="reviews.length" :reviews="reviews"></review-list>
+    <review-form @review-submitted="addReview"></review-form>
   </div>`,
+
   data() {
     return {
       //   cart: 0,
@@ -135,26 +137,28 @@ app.component("product-display", {
           quantity: 0,
         },
       ],
+      reviews: [],
     };
   },
   methods: {
     addToCart() {
-    //   this.cart += 1;
-    // this is how the other parts know that event happens.
-    // we're emitting or bubbling up that event (go to html)
-    this.$emit("add-to-cart", this.variants[this.selectedVariant].id)
+      //   this.cart += 1;
+      // this is how the other parts know that event happens.
+      // we're emitting or bubbling up that event (go to html)
+      this.$emit("add-to-cart", this.variants[this.selectedVariant].id);
     },
     updateVariant(index) {
       // bring this path -> image: "./assets/images/socks_green.jpg"
       this.selectedVariant = index;
       // console.log(index);
     },
+    addReview(review) {
+      this.review.push(review);
+    },
 
     // solution
     removeFromCart() {
-    
-        this.$emit("remove-from-cart", this.variants[this.selectedVariant].id)
-      
+      this.$emit("remove-from-cart", this.variants[this.selectedVariant].id);
     },
     // solution
   },
@@ -180,11 +184,10 @@ app.component("product-display", {
     // solution
 
     shipping() {
-        if (this.premium) {
-            return "Free"
-        }
-        return 2.99
-    }
-
+      if (this.premium) {
+        return "Free";
+      }
+      return 2.99;
+    },
   },
 });
